@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum AstNode {
     Program(Vec<AstNode>),
     StructDef {
