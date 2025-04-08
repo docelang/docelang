@@ -1,6 +1,20 @@
 #[derive(Debug, Clone)]
+pub enum UsePath {
+    Name(String),
+    Path(Vec<String>),
+    PathWithAlias(Vec<String>, String),
+    StringPath(String, Vec<UsePath>),
+}
+
+#[derive(Debug, Clone)]
+pub struct UseStmt {
+    pub paths: Vec<UsePath>,
+}
+
+#[derive(Debug, Clone)]
 pub enum AstNode {
     Program(Vec<AstNode>),
+    Use(UseStmt),
     StructDef {
         name: String,
         fields: Vec<(String, Option<String>)>,
@@ -9,34 +23,59 @@ pub enum AstNode {
         name: String,
         methods: Vec<AstNode>,
     },
-    FunctionDef {
+    FnDef {
         name: String,
         params: Vec<String>,
-        body: Vec<AstNode>,
+        ret_type: Option<String>,
+        body: Box<AstNode>,
     },
     Closure {
         params: Vec<String>,
-        body: Vec<AstNode>,
+        body: Box<AstNode>,
     },
-    LetAssign {
+    Block(Vec<AstNode>),
+    Let {
         name: String,
         value: Box<AstNode>,
+    },
+    Assign {
+        name: String,
+        value: Box<AstNode>,
+    },
+    Return(Box<AstNode>),
+    If {
+        condition: Box<AstNode>,
+        then_branch: Box<AstNode>,
+        else_branch: Option<Box<AstNode>>,
+    },
+    While {
+        condition: Box<AstNode>,
+        body: Box<AstNode>,
     },
     BinaryOp {
         op: String,
         left: Box<AstNode>,
         right: Box<AstNode>,
     },
-    FnCall {
+    UnaryOp {
+        op: String,
+        expr: Box<AstNode>,
+    },
+    Call {
         function: Box<AstNode>,
         args: Vec<AstNode>,
     },
-    MemberAccess {
-        object: Box<AstNode>,
-        property: String,
+    Index {
+        expr: Box<AstNode>,
+        index: Box<AstNode>,
     },
-    Identifier(String),
-    Number(i64),
+    Field {
+        expr: Box<AstNode>,
+        field: String,
+    },
+    Ident(String),
+    Number(f64),
     String(String),
-    Return(Box<AstNode>),
+    Bool(bool),
+    Nil,
 }
