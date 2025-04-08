@@ -1,23 +1,3 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum BinaryOperator {
-    Add,      // +
-    Subtract, // -
-    Multiply, // *
-    Divide,   // /
-    Modulo,   // %
-
-    Equal,          // ==
-    NotEqual,       // !=
-    LessThan,       // <
-    LessThanOrEqual,// <=
-    GreaterThan,    // >
-    GreaterThanOrEqual, // >=
-
-    LogicalAnd, // &&
-    LogicalOr,  // ||
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AstNode {
     Program(Vec<AstNode>),
     StructDef {
@@ -58,4 +38,21 @@ pub enum AstNode {
     Number(i64),
     String(String),
     Return(Box<AstNode>),
+}
+pub enum BinaryOperator {
+    Add,      // +
+    Subtract, // -
+    Multiply, // *
+    Divide,   // /
+    Modulo,   // %
+
+    Equal,          // ==
+    NotEqual,       // !=
+    LessThan,       // <
+    LessThanOrEqual,// <=
+    GreaterThan,    // >
+    GreaterThanOrEqual, // >=
+
+    LogicalAnd, // &&
+    LogicalOr,  // ||
 }
